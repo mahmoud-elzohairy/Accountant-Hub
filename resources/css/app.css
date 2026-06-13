@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source './**/*.vue';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Brand palette — black + #019a51 */
+    --color-brand-50: #e6f6ee;
+    --color-brand-100: #c2e9d4;
+    --color-brand-200: #8fd6b1;
+    --color-brand-300: #57c08b;
+    --color-brand-400: #2aae6f;
+    --color-brand-500: #019a51;
+    --color-brand-600: #018347;
+    --color-brand-700: #016539;
+    --color-brand-800: #014b2b;
+    --color-brand-900: #01331e;
+
+    --color-ink: #0a0a0a;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply bg-neutral-50 text-ink antialiased;
+}
+
+/* Reusable component classes.
+   Tailwind v4 forbids @apply-ing one custom class from another, so the shared
+   button base is defined once as raw declarations and each variant extends it. */
+@layer components {
+    .btn,
+    .btn-primary,
+    .btn-dark,
+    .btn-outline,
+    .btn-ghost {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+    .btn-primary {
+        @apply bg-brand-500 text-white hover:bg-brand-600;
+    }
+    .btn-dark {
+        @apply bg-ink text-white hover:bg-neutral-800;
+    }
+    .btn-outline {
+        @apply border border-neutral-300 bg-white text-ink hover:border-neutral-400 hover:bg-neutral-50;
+    }
+    .btn-ghost {
+        @apply text-neutral-600 hover:bg-neutral-100 hover:text-ink;
+    }
+    .input {
+        @apply w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-neutral-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30;
+    }
+    .label {
+        @apply mb-1.5 block text-sm font-medium text-neutral-700;
+    }
+    .card {
+        @apply rounded-xl border border-neutral-200 bg-white shadow-sm;
+    }
+}

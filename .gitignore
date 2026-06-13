@@ -25,3 +25,6 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Local scratch / debug files served from public/ (never commit — may embed tokens)
+/public/_*.html

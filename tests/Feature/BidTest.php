@@ -34,7 +34,7 @@ class BidTest extends TestCase
     public function test_an_authenticated_accountant_can_submit_a_bid(): void
     {
         Sanctum::actingAs(User::factory()->create());
-        $job = Job::factory()->create(['status' => 'open']);
+        $job = Job::factory()->create(['status' => 'open', 'budget_min' => 1000, 'budget_max' => 2000]);
 
         $this->postJson("/api/jobs/{$job->id}/bids", $this->validPayload())
             ->assertCreated()
@@ -47,7 +47,7 @@ class BidTest extends TestCase
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-        $job = Job::factory()->create(['status' => 'open']);
+        $job = Job::factory()->create(['status' => 'open', 'budget_min' => 1000, 'budget_max' => 2000]);
         Bid::factory()->for($job)->for($user)->create();
 
         $this->postJson("/api/jobs/{$job->id}/bids", $this->validPayload())
@@ -60,7 +60,7 @@ class BidTest extends TestCase
     public function test_a_bid_cannot_be_submitted_on_a_closed_job(): void
     {
         Sanctum::actingAs(User::factory()->create());
-        $job = Job::factory()->create(['status' => 'closed']);
+        $job = Job::factory()->create(['status' => 'closed', 'budget_min' => 1000, 'budget_max' => 2000]);
 
         $this->postJson("/api/jobs/{$job->id}/bids", $this->validPayload())
             ->assertStatus(422)
@@ -79,6 +79,35 @@ class BidTest extends TestCase
             'experience_summary' => '',
         ])->assertUnprocessable()
             ->assertJsonValidationErrors(['amount', 'delivery_days', 'cover_letter', 'experience_summary']);
+    }
+
+    public function test_a_bid_below_the_client_budget_is_rejected(): void
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $job = Job::factory()->create(['status' => 'open', 'budget_min' => 800, 'budget_max' => 1800]);
+
+        $this->postJson("/api/jobs/{$job->id}/bids", $this->validPayload(['amount' => 200]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('amount');
+    }
+
+    public function test_a_bid_above_the_client_budget_is_rejected(): void
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $job = Job::factory()->create(['status' => 'open', 'budget_min' => 800, 'budget_max' => 1800]);
+
+        $this->postJson("/api/jobs/{$job->id}/bids", $this->validPayload(['amount' => 5000]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('amount');
+    }
+
+    public function test_a_bid_within_the_client_budget_is_accepted(): void
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $job = Job::factory()->create(['status' => 'open', 'budget_min' => 800, 'budget_max' => 1800]);
+
+        $this->postJson("/api/jobs/{$job->id}/bids", $this->validPayload(['amount' => 1200]))
+            ->assertCreated();
     }
 
     public function test_an_accountant_sees_only_their_own_bids(): void

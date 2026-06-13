@@ -125,7 +125,15 @@ onMounted(load)
             </div>
             <div class="flex items-center justify-between">
               <dt class="text-neutral-500">Category</dt>
-              <dd class="font-medium text-ink">{{ job.category?.name }}</dd>
+              <dd>
+                <RouterLink
+                  v-if="job.category"
+                  :to="{ name: 'category-jobs', params: { id: job.category.id } }"
+                  class="font-medium text-brand-600 hover:text-brand-700 hover:underline"
+                >
+                  {{ job.category.name }}
+                </RouterLink>
+              </dd>
             </div>
           </dl>
 

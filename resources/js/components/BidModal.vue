@@ -62,8 +62,17 @@ async function submit() {
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label class="label" for="amount">Proposed price (USD)</label>
-          <input id="amount" v-model="form.amount" type="number" min="1" class="input" placeholder="e.g. 1800" />
+          <input
+            id="amount"
+            v-model="form.amount"
+            type="number"
+            :min="job.budget?.min"
+            :max="job.budget?.max"
+            class="input"
+            :placeholder="`e.g. ${job.budget?.min}`"
+          />
           <p v-if="errors.amount" class="mt-1 text-xs text-red-600">{{ errors.amount[0] }}</p>
+          <p v-else class="mt-1 text-xs text-neutral-400">Must be within {{ budgetRange(job.budget) }}.</p>
         </div>
         <div>
           <label class="label" for="delivery">Estimated delivery (days)</label>

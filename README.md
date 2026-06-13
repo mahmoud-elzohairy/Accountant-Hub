@@ -16,6 +16,7 @@ Built as a single-page Vue application backed by a Laravel JSON API.
 Accountant Hub lets logged-in accountants:
 
 - **Browse** a paginated, filterable list of accounting jobs.
+- **Browse by category** — a categories page, plus per-category paginated job listings.
 - **View** full job details — description, required skills, client info, budget, deadline, bid count.
 - **Apply** by submitting a bid (proposed price, delivery time, cover letter, experience).
 - **Track** their submitted bids on a personal dashboard.
@@ -198,6 +199,7 @@ Base URL: `/api`. Protected routes require an `Authorization: Bearer <token>` he
 | POST   | `/register`           | Register an accountant; returns user + token            |
 | POST   | `/login`              | Log in; returns user + token                            |
 | GET    | `/categories`         | List categories with open-job counts                    |
+| GET    | `/categories/{id}`    | A single category with its open-job count               |
 | GET    | `/jobs`               | List jobs (filter, sort, paginate)                      |
 | GET    | `/jobs/{id}`          | Full details for one job                                |
 

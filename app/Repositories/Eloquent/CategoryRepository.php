@@ -15,4 +15,11 @@ class CategoryRepository implements CategoryRepositoryInterface
             ->orderBy('name')
             ->get();
     }
+
+    public function findWithJobCount(int $id): Category
+    {
+        return Category::query()
+            ->withCount(['jobs' => fn ($q) => $q->where('status', 'open')])
+            ->findOrFail($id);
+    }
 }

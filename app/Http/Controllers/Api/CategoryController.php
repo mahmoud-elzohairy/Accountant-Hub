@@ -20,4 +20,12 @@ class CategoryController extends Controller
     {
         return CategoryResource::collection($this->categories->list());
     }
+
+    /**
+     * GET /api/categories/{id} — a single category with its open-job count.
+     */
+    public function show(int $category): CategoryResource
+    {
+        return new CategoryResource($this->categories->find($category));
+    }
 }

@@ -15,6 +15,18 @@ const routes = [
     meta: { title: 'Job Details' },
   },
   {
+    path: '/categories',
+    name: 'categories',
+    component: () => import('../pages/CategoriesPage.vue'),
+    meta: { title: 'Categories' },
+  },
+  {
+    path: '/categories/:id',
+    name: 'category-jobs',
+    component: () => import('../pages/CategoryJobsPage.vue'),
+    meta: { title: 'Category Jobs' },
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../pages/LoginPage.vue'),

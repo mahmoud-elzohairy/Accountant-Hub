@@ -29,6 +29,9 @@ async function logout() {
         <RouterLink :to="{ name: 'jobs' }" class="btn-ghost hidden sm:inline-flex" active-class="text-ink bg-neutral-100">
           Browse Jobs
         </RouterLink>
+        <RouterLink :to="{ name: 'categories' }" class="btn-ghost hidden sm:inline-flex" active-class="text-ink bg-neutral-100">
+          Categories
+        </RouterLink>
 
         <template v-if="auth.isAuthenticated">
           <RouterLink :to="{ name: 'dashboard' }" class="btn-ghost" active-class="text-ink bg-neutral-100">

@@ -86,6 +86,16 @@ All categories with a count of their **open** jobs (used by the filter UI).
 }
 ```
 
+### `GET /api/categories/{id}`
+A single category with its open-job count (used as the header on the category page).
+
+**200 OK**
+```json
+{ "data": { "id": 2, "name": "Bookkeeping", "slug": "bookkeeping", "description": "...", "jobs_count": 1 } }
+```
+
+**404** — when the category doesn't exist.
+
 ---
 
 ## Jobs
@@ -180,12 +190,12 @@ Submit a bid on a job.
 
 **Validation**
 
-| Field                | Rules                                  |
-| -------------------- | -------------------------------------- |
-| `amount`             | required, numeric, 1–9,999,999         |
-| `delivery_days`      | required, integer, 1–365               |
-| `cover_letter`       | required, 20–5000 chars                |
-| `experience_summary` | required, 10–2000 chars                |
+| Field                | Rules                                                      |
+| -------------------- | ---------------------------------------------------------- |
+| `amount`             | required, numeric, **within the job's `budget_min`–`budget_max`** |
+| `delivery_days`      | required, integer, 1–365                                   |
+| `cover_letter`       | required, 20–5000 chars                                    |
+| `experience_summary` | required, 10–2000 chars                                    |
 
 **201 Created**
 ```json

@@ -1,28 +1,37 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { api } from '../lib/api'
+import { api, toQuery } from '../lib/api'
 import { useAuthStore } from '../stores/auth'
 import { useToastStore } from '../stores/toast'
 import { money, formatDate, budgetRange } from '../lib/format'
 import StatusBadge from '../components/StatusBadge.vue'
 import EmptyState from '../components/EmptyState.vue'
+import Pagination from '../components/Pagination.vue'
 
 const auth = useAuthStore()
 const toast = useToastStore()
 const bids = ref([])
+const meta = ref({ current_page: 1, last_page: 1, total: 0 })
 const loading = ref(true)
+const page = ref(1)
 
 async function load() {
   loading.value = true
   try {
-    const data = await api.get('/my-bids')
+    const data = await api.get(`/my-bids${toQuery({ page: page.value })}`)
     bids.value = data.data
+    meta.value = data.meta
   } catch {
     toast.error('Could not load your bids.')
   } finally {
     loading.value = false
   }
+}
+
+function changePage(p) {
+  page.value = p
+  load()
 }
 
 onMounted(load)
@@ -33,7 +42,7 @@ onMounted(load)
     <header class="mb-6">
       <h1 class="text-2xl font-bold text-ink">My bids</h1>
       <p class="mt-1 text-sm text-neutral-500">
-        Track the jobs you've applied to, {{ auth.user?.name?.split(' ')[0] }}.
+        Track the jobs you've applied to, {{ auth.user?.name?.split(' ')[0] }}.<span v-if="meta.total"> You've placed {{ meta.total }} bid{{ meta.total === 1 ? '' : 's' }}.</span>
       </p>
     </header>
 
@@ -81,6 +90,10 @@ onMounted(load)
         </div>
 
         <p class="mt-3 line-clamp-2 text-sm text-neutral-600">{{ bid.cover_letter }}</p>
+      </div>
+
+      <div class="pt-4">
+        <Pagination :meta="meta" @change="changePage" />
       </div>
     </div>
   </div>

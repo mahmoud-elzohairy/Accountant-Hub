@@ -2,7 +2,7 @@
 
 A small Upwork-style marketplace where companies post accounting jobs and accountants browse, view details, and apply with a bid.
 
-Built as a single-page Vue application backed by a Laravel JSON API.
+Built as a single-page Vue 3 application backed by a Laravel JSON API.
 
 ### 📚 Documentation
 - [`docs/API.md`](docs/API.md) — full API reference with request/response examples

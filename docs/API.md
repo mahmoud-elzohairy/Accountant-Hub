@@ -67,7 +67,7 @@ Returns the authenticated accountant.
 
 **200 OK**
 ```json
-{ "data": { "id": 1, "name": "Sarah Mitchell", "email": "accountant@demo.test", "headline": "Certified Public Accountant · 8 yrs" } }
+{ "data": { "id": 1, "name": "Mahmoud Elzohairy", "email": "accountant@demo.test", "headline": "Certified Public Accountant · 8 yrs" } }
 ```
 
 ---

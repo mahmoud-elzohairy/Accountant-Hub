@@ -35,22 +35,22 @@ class AuthTest extends TestCase
     public function test_a_user_can_log_in_with_valid_credentials(): void
     {
         User::factory()->create([
-            'email' => 'sarah@example.com',
+            'email' => 'elzohairy@example.com',
             'password' => bcrypt('secret123'),
         ]);
 
         $this->postJson('/api/login', [
-            'email' => 'sarah@example.com',
+            'email' => 'elzohairy@example.com',
             'password' => 'secret123',
         ])->assertOk()->assertJsonStructure(['user', 'token']);
     }
 
     public function test_login_fails_with_invalid_credentials(): void
     {
-        User::factory()->create(['email' => 'sarah@example.com']);
+        User::factory()->create(['email' => 'elzohairy@example.com']);
 
         $this->postJson('/api/login', [
-            'email' => 'sarah@example.com',
+            'email' => 'elzohairy@example.com',
             'password' => 'wrong-password',
         ])->assertUnprocessable()->assertJsonValidationErrors('email');
     }

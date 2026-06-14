@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
         // Primary demo accountant (credentials shared in the README).
         $demo = User::create([
-            'name' => 'Sarah Mitchell',
+            'name' => 'Mahmoud Elzohairy',
             'email' => 'accountant@demo.test',
             'headline' => 'Certified Public Accountant · 8 yrs',
             'password' => Hash::make('password'),
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         // well populated and its pagination is demonstrable (more than one page).
         // Each bid amount sits within that job's budget range, matching the API rule.
         Job::where('status', 'open')->get()->each(function (Job $job) use ($demo) {
-            Bid::factory()->for($job)->for($demo)->create([
+            Bid::factory()->long()->for($job)->for($demo)->create([
                 'amount' => rand((int) $job->budget_min, (int) $job->budget_max),
             ]);
         });

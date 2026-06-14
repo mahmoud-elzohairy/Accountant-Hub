@@ -8,6 +8,7 @@ import { money, formatDate, budgetRange } from '../lib/format'
 import StatusBadge from '../components/StatusBadge.vue'
 import EmptyState from '../components/EmptyState.vue'
 import Pagination from '../components/Pagination.vue'
+import ExpandableText from '../components/ExpandableText.vue'
 
 const auth = useAuthStore()
 const toast = useToastStore()
@@ -89,7 +90,16 @@ onMounted(load)
           <span>Submitted {{ formatDate(bid.submitted_at) }}</span>
         </div>
 
-        <p class="mt-3 line-clamp-2 text-sm text-neutral-600">{{ bid.cover_letter }}</p>
+        <div class="mt-4 space-y-3">
+          <div v-if="bid.cover_letter">
+            <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">Cover letter</p>
+            <ExpandableText :text="bid.cover_letter" :clamp="3" />
+          </div>
+          <div v-if="bid.experience_summary">
+            <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">Experience summary</p>
+            <ExpandableText :text="bid.experience_summary" :clamp="3" />
+          </div>
+        </div>
       </div>
 
       <div class="pt-4">

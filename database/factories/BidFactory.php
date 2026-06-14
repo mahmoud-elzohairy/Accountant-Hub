@@ -23,4 +23,16 @@ class BidFactory extends Factory
             'experience_summary' => fake()->sentence(20),
         ];
     }
+
+    /**
+     * Long cover letter and experience summary, useful for demonstrating the
+     * "Show more / Show less" expand toggle on the dashboard.
+     */
+    public function long(): static
+    {
+        return $this->state(fn () => [
+            'cover_letter' => fake()->paragraphs(5, true),
+            'experience_summary' => fake()->paragraphs(3, true),
+        ]);
+    }
 }

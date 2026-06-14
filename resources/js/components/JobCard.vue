@@ -20,14 +20,14 @@ defineProps({
       <StatusBadge :status="job.status" />
     </div>
 
-    <h3 class="text-base font-semibold leading-snug text-ink group-hover:text-brand-600">
+    <h3 class="line-clamp-2 min-h-[2.75rem] text-base font-semibold leading-snug text-ink group-hover:text-brand-600">
       {{ job.title }}
     </h3>
-    <p class="mt-1 text-sm font-medium text-neutral-500">{{ job.company_name }}</p>
+    <p class="mt-1 truncate text-sm font-medium text-neutral-500">{{ job.company_name }}</p>
 
     <p class="mt-3 line-clamp-2 text-sm text-neutral-600">{{ job.short_description }}</p>
 
-    <div class="mt-4 flex items-center gap-2 text-sm">
+    <div class="mt-auto pt-4 flex items-center gap-2 text-sm">
       <span class="font-semibold text-brand-600">{{ budgetRange(job.budget) }}</span>
     </div>
 
